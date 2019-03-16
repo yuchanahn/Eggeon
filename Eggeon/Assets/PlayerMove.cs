@@ -42,7 +42,7 @@ public class PlayerMove : MonoBehaviour
             {
                 if (!bInGround)
                 {
-                    _gravity = Gravity * Time.deltaTime;
+                    //_gravity = Gravity * Time.deltaTime;
                 }
             }
 
@@ -61,6 +61,7 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        
         GETKey();
         float MovePosX = transform.position.x + _xspeed * Speed * Time.deltaTime;
         float MovePosY = transform.position.y + _yspeed * Time.deltaTime;
