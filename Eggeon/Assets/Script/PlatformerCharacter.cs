@@ -11,6 +11,8 @@ public class PlatformerCharacter : MonoBehaviour
     [SerializeField] Vector2 charSize;
     [SerializeField] Vector2 boxCastSize;
 
+    [SerializeField] lookme ch_;
+
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float JumpForce = 10f;
     [SerializeField] float gravityForce = -10f;
@@ -39,7 +41,14 @@ public class PlatformerCharacter : MonoBehaviour
 
     void ApplyGravity()
     {
-        SetVelocity(y: rigid.velocity.y + (gravityForce * Time.deltaTime));
+        if (!ch_.bInGround_)
+        {
+            SetVelocity(y: rigid.velocity.y + (gravityForce * Time.deltaTime));
+        }
+        else
+        {
+            SetVelocity(y: 0f);
+        }
     }
 
     void GetInput()
