@@ -311,8 +311,8 @@ GameObject:
   m_Component:
   - component: {fileID: 788358944}
   - component: {fileID: 788358941}
-  - component: {fileID: 788358942}
   - component: {fileID: 788358943}
+  - component: {fileID: 788358942}
   m_Layer: 8
   m_Name: player
   m_TagString: Untagged
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 788358940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ba472056ea3594fbfe13dbb415dfa4, type: 3}
+  m_Script: {fileID: 11500000, guid: fccb01487b309644aae15a2c3805f3ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rayHitLayer:
@@ -364,6 +364,13 @@ MonoBehaviour:
   jumpHeight: 3
   jumpTime: 0.25
   fallGravity: -10
+  dashTime: 0.15
+  swordDashTime: 0.5
+  swordDashSpeed: 10
+  dashSpeed: 10
+  airJumpSpeed: 10
+  airJumpCount: 2
+  swordDashing: 0
 --- !u!61 &788358943
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -986,16 +993,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664443965}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be6c6d270e07744e9d9bdedac817ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   char_: {fileID: 788358943}
-  sowrd_: {fileID: 1664443969}
+  sword_: {fileID: 1664443969}
   tip_: {fileID: 905286320}
   speed_: 0.5
   bInGround_: 0
+  mainCam_: {fileID: 519420031}
 --- !u!50 &1664443968
 Rigidbody2D:
   serializedVersion: 4

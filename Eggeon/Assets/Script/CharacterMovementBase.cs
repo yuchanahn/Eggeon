@@ -45,15 +45,18 @@ public class CharacterMovementBase : MonoBehaviour
     #region VAR - STATES
 
     protected bool useGravity = true;
-    bool grounded = false;
-    bool jumping = false;
-
-    #endregion
+    protected bool grounded { private set; get; }
 
 
-    #region METHOD - UNITY
 
-    private void Awake()
+    protected bool jumping { private set; get; }
+
+#endregion
+
+
+#region METHOD - UNITY
+
+private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         rigid.centerOfMass = Vector2.zero;
@@ -88,6 +91,10 @@ public class CharacterMovementBase : MonoBehaviour
 
     #region METHOD - MOVEMENT
 
+    protected virtual void WhenGrounded()
+    {
+    }
+
     void DetectGround()
     {
         // Reset Grounded State
@@ -105,6 +112,7 @@ public class CharacterMovementBase : MonoBehaviour
             hit.distance < hitMinDistance + groundSnapLength_Outter)
         {
             grounded = true;
+            WhenGrounded();
 
             // Snap To the Ground
             if (hit.distance > hitMinDistance && !jumping)
@@ -122,19 +130,12 @@ public class CharacterMovementBase : MonoBehaviour
     {
         if (jumpButtonPressed)
         {
-            if (grounded)
+            //if (grounded)
             {
                 // Character is Jumping
                 jumping = true;
 
-                // Set Jump Gravity
-                jumpGravity = -(2 * jumpHeight) / Mathf.Pow(jumpTime, 2);
-
-                // Set Jump Velocity
-                jumpVelocity = Mathf.Abs(jumpGravity * jumpTime);
-
-                // Apply Jump Velocity
-                SetVelocity(y: jumpVelocity);
+                JumpProcess(jumpHeight, jumpTime);
             }
 
             // Reset Jump Input
@@ -146,6 +147,18 @@ public class CharacterMovementBase : MonoBehaviour
         {
             jumping = false;
         }
+    }
+
+    protected virtual void JumpProcess(float height, float time)
+    {
+        // Set Jump Gravity
+        jumpGravity = -(2 * height) / Mathf.Pow(time, 2);
+
+        // Set Jump Velocity
+        jumpVelocity = Mathf.Abs(jumpGravity * time);
+
+        // Apply Jump Velocity
+        SetVelocity(y: jumpVelocity);
     }
     protected virtual void ApplyGravity()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class lookme : MonoBehaviour
 {
     [SerializeField] Collider2D char_;
-    [SerializeField] Collider2D sowrd_;
+    [SerializeField] Collider2D sword_;
 
     [SerializeField] Transform tip_;
 
@@ -13,27 +13,24 @@ public class lookme : MonoBehaviour
 
     public bool bInGround_;
 
-    Rigidbody2D rigd_;
-    Rigidbody2D charRigid_;
+    Rigidbody2D Rg_;
+    PlayerCharacter player_;
 
-    Camera mainCam_;
+    [SerializeField] Camera mainCam_;
 
-    // Start is called before the first frame update
     void Start()
     {
-        Physics2D.IgnoreCollision(char_, sowrd_);
-        rigd_ = GetComponent<Rigidbody2D>();
-        charRigid_ = char_.gameObject.GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreCollision(char_, sword_);
+        Rg_ = GetComponent<Rigidbody2D>();
+        player_ = char_.GetComponent<PlayerCharacter>();
         mainCam_ = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 pos = mainCam_.ScreenToWorldPoint(Input.mousePosition);
         Vector3 player_pos = gameObject.transform.position;
         Vector2 mouse_pos = new Vector2(pos.x - player_pos.x, pos.y - player_pos.y);
-        Vector2 reversed = new Vector2(pos.y - player_pos.y, pos.x - player_pos.x);
         float rad = Mathf.Atan2(mouse_pos.x, mouse_pos.y);
         var mouse_rotate = (rad * 180) / Mathf.PI;
 
@@ -42,21 +39,25 @@ public class lookme : MonoBehaviour
 
         
 
-        if (bInGround_)
+        if (bInGround_ && !player_.swordDashing)
         {
-            charRigid_.transform.parent = tip_;
+            player_.SwordDash(-transform.right);
+            
+            //charRigid_.transform.parent = tip_;
             //charRigid_.transform.SetParent(tip_, false);
 
-            charRigid_.constraints = 
+            /*charRigid_.constraints = 
                   RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            */
+            //tip_.localEulerAngles = new Vector3(0,0, mouse_rotate + 90);
 
-            tip_.localEulerAngles = new Vector3(0,0, mouse_rotate + 90);
-           
             //charRigid_.MovePosition(charRigid_.position - reversed * speed_ * Time.deltaTime);
+
+
         }
         else
         {
-            rigd_.rotation = (-mouse_rotate + 90);
+            Rg_.rotation = (-mouse_rotate + 90);
         }
 
 
